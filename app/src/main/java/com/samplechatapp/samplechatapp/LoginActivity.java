@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    //private DatabaseReference mUserDatabase;
+    private DatabaseReference mUserDatabase;
 
 
     @Override
@@ -49,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginProgress = new ProgressDialog(this);
 
-        //mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
         mLoginEmail = (TextInputLayout) findViewById(R.id.login_email);
@@ -96,11 +98,13 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(mainIntent);
                     finish();
 
-
+                    //Geting token for firebase cloud functions
+                    //get user id
                     String current_user_id = mAuth.getCurrentUser().getUid();
+                    //Get the token id
                     String deviceToken = FirebaseInstanceId.getInstance().getToken();
 
-                    /*mUserDatabase.child(current_user_id).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    mUserDatabase.child(current_user_id).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
 
@@ -111,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         }
-                    });*/
+                    });
 
                 } else {
 

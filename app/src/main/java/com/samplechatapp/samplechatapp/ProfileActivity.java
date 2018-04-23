@@ -188,6 +188,7 @@ public class ProfileActivity extends AppCompatActivity {
                 // If not friends
                 if(mCurrent_state.equals("not_friends")){
 
+                    //push() will create a push id, means a random id
                     DatabaseReference newNotificationref = mRootRef.child("notifications").child(user_id).push();
                     String newNotificationId = newNotificationref.getKey();
 
@@ -196,6 +197,12 @@ public class ProfileActivity extends AppCompatActivity {
                     notificationData.put("from", mCurrent_user.getUid());
                     notificationData.put("type", "request");
 
+                    mNotificationDatabase.child(user_id).push().setValue(notificationData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                        }
+                    });
                     //Map for requests
                     Map requestMap = new HashMap();
                     // Adding values by dividing forward slashes

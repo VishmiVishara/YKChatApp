@@ -108,6 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
                 //Get image from gle storage, If it is not there it will place a placeholder
                 Picasso.get()
                         .load(image)
+                        .networkPolicy(NetworkPolicy.OFFLINE)
                         .placeholder(R.drawable.default_avatar)
                         .error(R.drawable.default_avatar)
                         .into(mDisplayImage);
@@ -154,6 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Get current status
                 String status_value = mStatus.getText().toString();
 
                 Intent status_intent = new Intent(SettingsActivity.this, StatusActivity.class);
